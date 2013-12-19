@@ -1,1 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<extension type="component" version="2.5.0" method="upgrade">
+    <name>com_europeana</name>
+    <creationDate>December 2013</creationDate>
+    <author>João Canas</author>
+    <authorEmail>joao.canas@peopleware.pt</authorEmail>
+    <authorUrl>http://www.peopleware.pt</authorUrl>
+    <copyright>Copyright Info</copyright>
+    <license></license>
+    <version>1.0.0.1</version>
+    <description>European component for exporting objects</description>
+    
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>europeana.php</filename>
+        <filename>controller.php</filename>
+        <folder>views</folder>
+        <folder>controller</folder>
+        <folder>helpers</folder>
+        <folder>css</folder>
+        <folder>js</folder>
+        <folder>language</folder>
+        <folder>models</folder>
+    </files>
+    
+    <languages folder="site">
+        <language tag="en-GB">language/en-GB/en-GB.com_europeana.ini</language>
+    </languages>
+    
+    <administration>
+        <menu>com_europeana</menu>
+        <files folder="admin">
+            <filename>index.html</filename>
+            <filename>europeana.php</filename>
+            <filename>controller.php</filename>
+            <folder>views</folder>
+            <folder>controllers</folder>
+            <folder>helpers</folder>
+            <folder>css</folder>
+            <folder>js</folder>
+            <folder>language</folder>
+            <folder>models</folder>
+        </files>
+        
+        <languages folder="admin">
+            <language tag="en-GB">language/en-GB/en-GB.com_europeana.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_europeana.sys.ini</language>
+        </languages>
+    </administration>
+</extension>

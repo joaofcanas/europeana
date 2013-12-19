@@ -7,8 +7,8 @@ class EuropeanaViewEuropena extends JView
 {
     public function display($tpl = null)
     {
-        //JToolBarHelper::title('COM_EUROPEANA_ADMINISTRATOR_PAGE');
-        //JToolBarHelper::cancel('europeana.cancel');
+        JToolBarHelper::title('COM_EUROPEANA_ADMINISTRATOR_PAGE');
+        JToolBarHelper::cancel('europeana.cancel');
         parent::display($tpl);
     }
 }
