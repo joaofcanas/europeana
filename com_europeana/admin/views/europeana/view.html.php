@@ -3,7 +3,7 @@
 defined('_JEXEC') or die('You do not have permission');
 jimport('joomla.application.component.view');
 
-class EuropeanaViewEuropena extends JView
+class EuropeanaViewEuropeana extends JView
 {
     public function display($tpl = null)
     {

@@ -15,7 +15,7 @@
         <filename>europeana.php</filename>
         <filename>controller.php</filename>
         <folder>views</folder>
-        <folder>controller</folder>
+        <folder>controllers</folder>
         <folder>helpers</folder>
         <folder>css</folder>
         <folder>js</folder>
