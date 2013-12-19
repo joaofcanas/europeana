@@ -5,31 +5,11 @@ jimport('joomla.application.component.controller');
 
 class EuropeanaControllerExport extends JController {
     
-    public function edit(){
-        
-    }
-    
-    public function add() {
-        
-    }
-    
-    public function remove() {
-        
-    }
-    
     public function cancel() {
-        
-    }
-    
-    public function save() {
-        
-    }
-    
-    public function apply() {
-        
+        $this->setRedirect('index.php?option=com_europeana');
     }
     
     public function export() {
-        
+        echo JText::_('Exporting....');
     }
 }
