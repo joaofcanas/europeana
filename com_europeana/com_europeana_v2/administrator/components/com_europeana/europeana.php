@@ -1,4 +1,12 @@
 <?php
+
 defined('_JEXEC') or die("Access Denied");
-echo "<h3>EUROPEANA</h3>";
+
+jimport('joomla.application.component.controller');
+
+$controller = JController::getInstance('Europeana');
+
+$controller->execute(JRequest::getCmd('task'));
+
+$controller->redirect();
 ?>

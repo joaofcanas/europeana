@@ -3,16 +3,39 @@
 	<name>com_europeana</name>
 	<author>João Canas</author>
 	<version>1.0.0</version>
-	<description>com_europeana_description</description>
-	<files folder="components/com_europeana">
+	<description>COM_EUROPEANA_DESCRIPTION</description>
+	
+        <media destination="com_europeana" folder="media">
+            <folder>images</folder>
+            <folder>css</folder>
+            <folder>js</folder>
+            <filename>index.html</filename>
+        </media>
+        
+        <files folder="components\com_europeana">
 		<filename>europeana.php</filename>
 		<filename>index.html</filename>
+                <filename>controller.php</filename>
 	</files>
-
+        
+        <languages folder="language\en-GB">
+            <language tag="en-GB">en-GB.com_europeana.ini</language>
+        </languages>
+        
 	<administration>
-		<files folder="administrator/components/com_europeana">
+		<files folder="administrator\components\com_europeana">
 			<filename>europeana.php</filename>
 			<filename>index.html</filename>
+                        <filename>controller.php</filename>
 		</files>
+                
+                <languages folder="administrator\language\en-GB">
+                    <language tag="en-GB">en-GB.com_europeana.sys.ini</language>
+                    <language tag="en-GB">en-GB.com_europeana.ini</language>
+                </languages>
+                
+                <menu link="option=com_europeana" img="../media/com_europeana/images/download-icon-16x16.png">COM_EUROPEANA_MENU</menu>
+                
 	</administration>
+        
 </extension>
