@@ -9,6 +9,7 @@ class EuropeanaViewExport extends JView
     {
         JToolBarHelper::title('COM_EUROPEANA_VIEW_EXPORT_ADMINISTRATOR_PAGE');
         JToolBarHelper::cancel('export.cancel');
+        JToolBarHelper::custom('export.export','export','export','Export',false,false);
         parent::display($tpl);
     }
 }
