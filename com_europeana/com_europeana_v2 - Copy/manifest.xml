@@ -49,6 +49,9 @@
                         <filename>install.sql</filename>
                         <filename>update.sql</filename>
                         <filename>uninstall.sql</filename>
+                        <folder>controllers</folder>
+                        <folder>views</folder>
+                        <folder>models</folder>
 		</files>
                 
                 <languages folder="administrator/language/en-GB">
