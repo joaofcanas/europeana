@@ -9,6 +9,7 @@
             <folder>images</folder>
             <folder>css</folder>
             <folder>js</folder>
+            <folder>lib</folder>
             <folder>xml-files</folder>
             <filename>index.html</filename>
         </media>
@@ -21,6 +22,9 @@
         
         <languages folder="language/en-GB">
             <language tag="en-GB">en-GB.com_europeana.ini</language>
+        </languages>
+        <languages folder="language/pt-PT">
+            <language tag="pt-PT">pt-PT.com_europeana.ini</language>
         </languages>
         
         <install>
@@ -58,7 +62,10 @@
                     <language tag="en-GB">en-GB.com_europeana.sys.ini</language>
                     <language tag="en-GB">en-GB.com_europeana.ini</language>
                 </languages>
-                
+                <languages folder="language/pt-PT">
+                    <language tag="pt-PT">pt-PT.com_europeana.sys.ini</language>
+                    <language tag="pt-PT">pt-PT.com_europeana.ini</language>
+                </languages>
                 <menu link="option=com_europeana" img="../media/com_europeana/images/download-icon-16x16.png">COM_EUROPEANA_MENU</menu>
                 
 	</administration>

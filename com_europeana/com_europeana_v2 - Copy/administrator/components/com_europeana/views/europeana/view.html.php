@@ -42,7 +42,7 @@ class EuropeanaViewEuropeana extends JView
     */
     protected function addToolBar() 
     { 
-        JToolBarHelper::title('COM_EUROPEANA','download-icon-48x48.png');
+        JToolBarHelper::title(JText::_('COM_EUROPEANA'),'download-icon-48x48.png');
         //JToolBarHelper::title(JText::_('COM_EUROPEANA_FILE_LIST'));
         JToolBarHelper::custom('europeana.export','export','export','COM_EUROPEANA_TASK_EXPORT',false);
     }

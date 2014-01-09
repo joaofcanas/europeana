@@ -1,3 +1,10 @@
 .icon-48-download-icon-48x48 {
     background-image: url('../images/download-icon-48x48.png');
 }
+
+a.fileDownload {
+    background-image: url('../images/download-icon-16x16.png');
+    background-position: left;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}

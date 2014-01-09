@@ -77,6 +77,7 @@ class EuropeanaController extends JController {
         
         $doc = JFactory::getDocument();
         $doc->addStyleSheet(JURI::root() . 'media/com_europeana/css/backend-com_europeana.css');
+        $doc->addScript(JURI::root() . 'media/com_eurpeana/js/jquery-1.10.2.min.js');
         $doc->addScript(JURI::root() . 'media/com_europeana/js/backend-scripts-com_europeana.js');
         
         // call parent behavior
