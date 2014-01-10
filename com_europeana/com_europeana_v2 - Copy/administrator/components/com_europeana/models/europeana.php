@@ -15,14 +15,17 @@ class EuropeanaModelEuropeana extends JModelList
      */
     protected function getListQuery()
     {
+        $filter = JRequest::getVar('filter','0');
         // Create a new query object.           
         $db = JFactory::getDBO();
         $query = $db->getQuery(true);
         // Select some fields
         $query->select('f.*, u.username, u.name');
-        // From the hello table
         $query->from('#__europeana_files AS f');
         $query->leftJoin('#__users AS u ON f.user_id = u.id');
+        $query->where('f.deleted = ' . $db->quote($filter));
+        $query->order('f.datetime DESC');
+        
         return $query;
     }
 }

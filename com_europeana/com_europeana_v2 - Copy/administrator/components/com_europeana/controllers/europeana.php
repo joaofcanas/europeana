@@ -16,10 +16,90 @@ class EuropeanaControllerEuropeana extends JController {
         
         JToolBarHelper::title('COM_EUROPEANA_FILE_LIST','download-icon-48x48.png');
 //      JToolBarHelper::title(JText::_('COM_EUROPEANA_FILE_LIST'));
-        JToolBarHelper::back();
+        JToolBarHelper::back('JTOOLBAR_BACK', 'javascript:window.location=\'index.php?option=com_europeana\'');
+    }
+    
+    function restore() {
+        $app = JFactory::getApplication();
+        
+        $this->addToolBar();
+        $jinput = new JInput;
+        $cid = $jinput->get('cid', array(), 'ARRAY');
+        $cid = implode(',',$cid);
+        
+        $db = JFactory::getDBO();
+        $query = $db->getQuery(true);
+        // Fields to update.
+        $fields = array(
+            $db->quoteName('deleted') . " = '0'"
+        );
+        
+        $query->update($db->quoteName('#__europeana_files'))->set($fields)->where($db->quoteName('id' ) . 'IN ('.$cid.')');
+
+        $db->setQuery($query);
+        
+        $result = $db->query();
+        
+        if ($result == 1)
+        {
+            $app->enqueueMessage (JText::sprintf('COM_EUROPEANA_RECORDS_X_WAS_RESTORED',$cid), 'message');
+            echo '<h3>' . JText::_('COM_EUROPEANA_SUCCESSFULY_RESTORED') . '</h3>';
+            $cid = explode(',', $cid);
+            echo '<ul>';
+            foreach($cid as $id){
+                echo '<li>' . JText::sprintf('COM_EUROPEANA_RECORD_X_WAS_RESTORED',$id) . '</li>';
+            }
+            echo '</ul>';
+        }
+        else
+        {
+            $app->enqueueMessage ('COM_EUROPEANA_ERROR', 'error');
+            echo '<h3>' . JText::_('COM_EUROPEANA_ERROR') . '</h3>';
+        }
+    }
+    
+    function remove() {
+        $app = JFactory::getApplication();
+        
+        $this->addToolBar();
+        $jinput = new JInput;
+        $cid = $jinput->get('cid', array(), 'ARRAY');
+        $cid = implode(',',$cid);
+        
+        $db = JFactory::getDBO();
+        $query = $db->getQuery(true);
+        // Fields to update.
+        $fields = array(
+            $db->quoteName('deleted') . " = '1'"
+        );
+        
+        $query->update($db->quoteName('#__europeana_files'))->set($fields)->where($db->quoteName('id' ) . 'IN ('.$cid.')');
+
+        $db->setQuery($query);
+        
+        $result = $db->query();
+        
+        if ($result == 1)
+        {
+            $app->enqueueMessage (JText::sprintf('COM_EUROPEANA_RECORDS_X_WAS_DELETED',$cid), 'message');
+            echo '<h3>' . JText::_('COM_EUROPEANA_SUCCESSFULY_DELETED') . '</h3>';
+            $cid = explode(',', $cid);
+            echo '<ul>';
+            foreach($cid as $id){
+                echo '<li>' . JText::sprintf('COM_EUROPEANA_RECORD_X_WAS_DELETED',$id) . '</li>';
+            }
+            echo '</ul>';
+        }
+        else
+        {
+            $app->enqueueMessage ('COM_EUROPEANA_ERROR', 'error');
+            echo '<h3>' . JText::_('COM_EUROPEANA_ERROR') . '</h3>';
+        }
     }
     
     function export(){
+        $app = JFactory::getApplication();
+        
         jimport('joomla.filesystem.folder');
         jimport('joomla.filesystem.file');        
         
@@ -60,8 +140,10 @@ class EuropeanaControllerEuropeana extends JController {
                     echo '<a class="btn" href="' . $path . '" download>' . JText::_('K2_DOWNLOAD') . ' ' . $file . '</a>';
                     echo '<div>';
                     
-                    $this->prepareDataToDatabase();
-                    $this->storeIntoDatabase($fileName);
+                    $logs = $this->prepareDataToDatabase();
+                    $result = $this->storeIntoDatabase($fileName,$logs);
+                    
+                    $app->enqueueMessage ($result, 'message');
                 }
             }
         }
@@ -105,7 +187,16 @@ class EuropeanaControllerEuropeana extends JController {
         }
 
         $this->updateData($items);
-
+        
+        $logs = '';
+        $itemsId = array();
+        
+        foreach($items as $item){
+            @array_push($itemsId, $item['id']);
+        }
+        
+        $logs = array('numOfItemsExported' => count($items),'itemsId' => $itemsId);
+        return $logs;
     }
 	
     private function updateData($items = null) {
@@ -591,15 +682,29 @@ class EuropeanaControllerEuropeana extends JController {
         }
     }
     
-    private function storeIntoDatabase($filename) {
+    private function storeIntoDatabase($filename,$logs) {
         $db = JFactory::getDBO();
         $user = JFactory::getUser();
-        //$filename .= '_' . $user->username . '.xml';
         
-        $query = "INSERT INTO #__europeana_files (`user_id`,`filename`) VALUES ('".$user->id."','". $filename ."')";
+        if (is_array($logs)) {
+            $logs = json_encode($logs);
+        }
         
+        $query = $db->getQuery(true);
+        // Insert columns.
+        $columns = array('user_id', 'filename', 'logs');
+        // Insert values.
+        $values = array($user->id, $db->quote($filename), $db->quote($logs));
+        // Prepare the insert query.
+        $query
+            ->insert($db->quoteName('#__europeana_files'))
+            ->columns($db->quoteName($columns))
+            ->values(implode(',', $values));
+        //$query = "INSERT INTO #__europeana_files (`user_id`,`filename`,`logs`) VALUES ('".$user->id."','". $filename ."','".$logs."')";
+        // Set the query using our newly populated query object and execute it.
         $db->setQuery($query);
-        $db->query();
+        $result = $db->query();
         
+        return $result;
     }
 }

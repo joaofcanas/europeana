@@ -6,6 +6,9 @@ defined('_JEXEC') or die('Restricted Access');
 JHtml::_('behavior.tooltip');
 ?>
 <form id="adminform" action="<?php echo JRoute::_('index.php?option=com_europeana'); ?>" method="post" name="adminForm">
+    <div>
+        <?php echo $this->loadTemplate('filters'); ?>
+    </div>
     <table class="adminlist">
         <thead><?php echo $this->loadTemplate('head');?></thead>
         <tfoot><?php echo $this->loadTemplate('foot');?></tfoot>

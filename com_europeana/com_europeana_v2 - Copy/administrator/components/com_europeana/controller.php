@@ -8,14 +8,14 @@ jimport('joomla.application.component.controller');
 
 class EuropeanaController extends JController {
     
-    private $perPage;
-    private $limitstart;
-    private $pagination;
+//    private $perPage;
+//    private $limitstart;
+//    private $pagination;
     
     function __construct() {
         parent::__construct();
-        $this->perPage = 5;
-        $this->limitstart = JRequest::getInt('limitstart',0);
+//        $this->perPage = 5;
+//        $this->limitstart = JRequest::getInt('limitstart',0);
     }
     
 //    function display() {
@@ -84,43 +84,43 @@ class EuropeanaController extends JController {
         parent::display($cachable);
     }
     
-    function export() {
-        echo "Exporting..:";
-        $date = new DateTime();
-        $this->storeIntoDatabase($date->getTimestamp());
-    }
+//    function export() {
+//        echo "Exporting..:";
+//        $date = new DateTime();
+//        $this->storeIntoDatabase($date->getTimestamp());
+//    }
     
-    private function storeIntoDatabase($filename) {
-        $db = JFactory::getDBO();
-        $user = JFactory::getUser();
-        
-        $query = "INSERT INTO #__europeana_files (`user_id`,`filename`) VALUES ('".$user->id."','". $filename ."')";
-        
-        $db->setQuery($query);
-        $db->query();
-        
-    }
+//    private function storeIntoDatabase($filename) {
+//        $db = JFactory::getDBO();
+//        $user = JFactory::getUser();
+//        
+//        $query = "INSERT INTO #__europeana_files (`user_id`,`filename`) VALUES ('".$user->id."','". $filename ."')";
+//        
+//        $db->setQuery($query);
+//        $db->query();
+//        
+//    }
     
-    private function getTotalFiles(){
-        $db = JFactory::getDBO();
-        $query = 'SELECT f.*, u.username, u.name FROM #__europeana_files AS f LEFT JOIN #__users AS u ON f.user_id = u.id;';
-        $db->setQuery($query);
-        $db->query();
-        $total = $db->getNumRows();
-        return $total;
-    }
+//    private function getTotalFiles(){
+//        $db = JFactory::getDBO();
+//        $query = 'SELECT f.*, u.username, u.name FROM #__europeana_files AS f LEFT JOIN #__users AS u ON f.user_id = u.id;';
+//        $db->setQuery($query);
+//        $db->query();
+//        $total = $db->getNumRows();
+//        return $total;
+//    }
     
-    private function getFilesHistory(){
-        $db = JFactory::getDBO();
-        $query = 'SELECT f.*, u.username, u.name FROM #__europeana_files AS f LEFT JOIN #__users AS u ON f.user_id = u.id LIMIT '.$this->limitstart . ',' . $this->perPage .';';
-        $db->setQuery($query);
-        $rows = $db->loadObjectList();
-        
-        $total = $this->getTotalFiles();
-        
-        jimport('joomla.html.pagination');
-        $this->pagination = new JPagination($total,$this->limitstart,$this->perPage);
-        
-        return $rows;
-    }
+//    private function getFilesHistory(){
+//        $db = JFactory::getDBO();
+//        $query = 'SELECT f.*, u.username, u.name FROM #__europeana_files AS f LEFT JOIN #__users AS u ON f.user_id = u.id LIMIT '.$this->limitstart . ',' . $this->perPage .';';
+//        $db->setQuery($query);
+//        $rows = $db->loadObjectList();
+//        
+//        $total = $this->getTotalFiles();
+//        
+//        jimport('joomla.html.pagination');
+//        $this->pagination = new JPagination($total,$this->limitstart,$this->perPage);
+//        
+//        return $rows;
+//    }
 }

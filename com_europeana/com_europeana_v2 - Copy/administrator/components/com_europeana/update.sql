@@ -1,1 +1,1 @@
-
+ALTER TABLE #__europeana_files ADD COLUMN logs TEXT NOT NULL DEFAULT '' AFTER datetime;
