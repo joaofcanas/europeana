@@ -9,7 +9,7 @@ jq(document).ready(function(){
             {
                 jq('input[name="'+this.name+'"]').val('');
             }
-            jq('input[name="'+this.name+'"]').val('');
+            //jq('input[name="'+this.name+'"]').val('');
     	});
     }
 });

@@ -48,7 +48,9 @@
 	<administration>
 		<files folder="administrator/components/com_europeana">
 			<filename>europeana.php</filename>
-			<filename>index.html</filename>
+                        <filename>access.xml</filename>
+                        <filename>config.xml</filename>
+                        <filename>index.html</filename>
                         <filename>controller.php</filename>
                         <filename>install.sql</filename>
                         <filename>update.sql</filename>

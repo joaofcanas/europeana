@@ -1,14 +1,18 @@
-<fieldset
-    name="permissions"
-    label="JCONFIG_PERMISSIONS_LABEL"
-    description="JCONFIG_PERMISSIONS_DESC">
-    <field
-        name="rules"
-        type="rules"
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fieldset
+        name="permissions"
         label="JCONFIG_PERMISSIONS_LABEL"
-        class="inputbox"
-        validate="rules"
-        filter="rules"
-        component="com_europeana"
-        section="component"/>
-</fieldset>
+        description="JCONFIG_PERMISSIONS_DESC"
+    >
+        <field
+            name="rules"
+            type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            class="inputbox"
+            validate="rules"
+            filter="rules"
+            component="com_europeana"
+            section="component" />
+    </fieldset>
+</config>

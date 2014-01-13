@@ -15,6 +15,9 @@ class EuropeanaViewEuropeana extends JView
      */
     function display($tpl = null) 
     {
+//        $doc = JFactory::getDocument();
+//        $doc->addScript('components/com_europeana/views/europeana/submitbutton.js');
+        
         // Get data from the model
         $files = $this->get('Items');
         $pagination = $this->get('Pagination');
@@ -43,16 +46,30 @@ class EuropeanaViewEuropeana extends JView
     { 
         $filter = JRequest::getVar('filter','0');
         $user = JFactory::getUser();
-        
-
-        
-        
+        // Title
         JToolBarHelper::title(JText::_('COM_EUROPEANA'),'download-icon-48x48.png');
         //JToolBarHelper::title(JText::_('COM_EUROPEANA_FILE_LIST'));
-        if ($filter == '0')
-            JToolBarHelper::custom('europeana.remove','delete','delete','JTOOLBAR_DELETE');
-        else
-            JToolBarHelper::custom('europeana.restore','restore','restore','COM_EUROPEANA_RESTORE');
         JToolBarHelper::custom('europeana.export','export','export','COM_EUROPEANA_TASK_EXPORT',false);
+        JToolBarHelper::divider();
+        
+        if ($filter == '0')
+        {
+            JToolBarHelper::custom('europeana.remove','trash','trash','JTOOLBAR_TRASH');
+        }
+        else
+        {
+            JToolBarHelper::custom('europeana.restore','restore','restore','COM_EUROPEANA_RESTORE');
+            if (JFactory::getUser()->authorise('core.admin', 'com_europeana')) 
+            {
+                JToolBarHelper::custom('europeana.delete','delete','delete','JTOOLBAR_DELETE');
+            }
+        }
+        
+        // Options button.
+        if (JFactory::getUser()->authorise('core.admin', 'com_europeana')) 
+        {
+            JToolBarHelper::divider();
+            JToolBarHelper::preferences('com_europeana');
+        }
     }
 }

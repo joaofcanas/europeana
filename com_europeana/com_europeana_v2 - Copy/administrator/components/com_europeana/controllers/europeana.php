@@ -10,13 +10,50 @@ class EuropeanaControllerEuropeana extends JController {
     */
     protected function addToolBar() {
         $doc = JFactory::getDocument();
-        $doc->addStyleSheet(JURI::root() . 'media/com_europeana/css/backend-com_europeana.css');
-        $doc->addScript('media/com_europeana/js/jquery-1.10.2.min.js');
-        $doc->addScript(JURI::root() . 'media/com_europeana/js/backend-scripts-com_europeana.js');
+        $doc->addStyleSheet(JURI::root().'media/com_europeana/css/backend-com_europeana.css');
+        $doc->addScript(JURI::root().'media/com_europeana/js/jquery-1.10.2.min.js');
+        $doc->addScript(JURI::root().'media/com_europeana/js/backend-scripts-com_europeana.js');
         
-        JToolBarHelper::title('COM_EUROPEANA_FILE_LIST','download-icon-48x48.png');
+        JToolBarHelper::title(JText::_('COM_EUROPEANA'),'download-icon-48x48.png');
 //      JToolBarHelper::title(JText::_('COM_EUROPEANA_FILE_LIST'));
         JToolBarHelper::back('JTOOLBAR_BACK', 'javascript:window.location=\'index.php?option=com_europeana\'');
+    }
+    
+    function delete(){
+        $this->addToolBar();
+        
+        $app = JFactory::getApplication();
+        $jinput = new JInput;
+        $cid = $jinput->get('cid', array(), 'ARRAY');
+        $cid = implode(',',$cid);
+        
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        // delete all custom keys for user 1001.
+        $conditions = array(
+            $db->quoteName('id') . ' IN (' . $cid . ')'
+        );
+        $query->delete($db->quoteName('#__europeana_files'));
+        $query->where($conditions);
+        $db->setQuery($query);
+        $result = $db->query();
+        
+        if ($result == 1)
+        {
+            $app->enqueueMessage (JText::sprintf('COM_EUROPEANA_RECORDS_X_WAS_DELETED',$cid), 'message');
+            echo '<h3>' . JText::_('COM_EUROPEANA_SUCCESSFULY_DELETED') . '</h3>';
+            $cid = explode(',', $cid);
+            echo '<ul>';
+            foreach($cid as $id){
+                echo '<li>' . JText::sprintf('COM_EUROPEANA_RECORD_X_WAS_DELETED',$id) . '</li>';
+            }
+            echo '</ul>';
+        }
+        else
+        {
+            $app->enqueueMessage ('COM_EUROPEANA_ERROR', 'error');
+            echo '<h3>' . JText::_('COM_EUROPEANA_ERROR') . '</h3>';
+        }
     }
     
     function restore() {
@@ -81,12 +118,12 @@ class EuropeanaControllerEuropeana extends JController {
         
         if ($result == 1)
         {
-            $app->enqueueMessage (JText::sprintf('COM_EUROPEANA_RECORDS_X_WAS_DELETED',$cid), 'message');
-            echo '<h3>' . JText::_('COM_EUROPEANA_SUCCESSFULY_DELETED') . '</h3>';
+            $app->enqueueMessage (JText::sprintf('COM_EUROPEANA_RECORDS_X_WAS_TRASHED',$cid), 'message');
+            echo '<h3>' . JText::_('COM_EUROPEANA_SUCCESSFULY_TRASHED') . '</h3>';
             $cid = explode(',', $cid);
             echo '<ul>';
             foreach($cid as $id){
-                echo '<li>' . JText::sprintf('COM_EUROPEANA_RECORD_X_WAS_DELETED',$id) . '</li>';
+                echo '<li>' . JText::sprintf('COM_EUROPEANA_RECORD_X_WAS_TRASHED',$id) . '</li>';
             }
             echo '</ul>';
         }
@@ -251,12 +288,18 @@ class EuropeanaControllerEuropeana extends JController {
 
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
         $results = $db->loadObjectList();
-        $extraFieldModel = K2Model::getInstance('ExtraField', 'K2Model');
-        $extraFieldsArray = $extraFieldModel->getExtraFieldsByGroup(3);
-        $cid = JRequest::setVar('cid',$results[0]->id);
-        $k2ItemModel = K2Model::getInstance('Item','K2Model');
-        //$item = $k2ItemModel->getData();
-        $extraFields = json_decode($results[0]->extra_fields);
+        
+        try {
+            $extraFieldModel = K2Model::getInstance('ExtraField', 'K2Model');
+            $extraFieldsArray = $extraFieldModel->getExtraFieldsByGroup(3);
+            $cid = JRequest::setVar('cid',$results[0]->id);
+            $k2ItemModel = K2Model::getInstance('Item','K2Model');
+            //$item = $k2ItemModel->getData();
+            $extraFields = json_decode($results[0]->extra_fields);
+        } catch (Exception $ex) {
+            return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+        }
+        
 
         // echo '<div><pre>';
         // print_r($extraFieldsArray);
