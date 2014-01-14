@@ -14,14 +14,14 @@ class EuropeanaViewEuropeana extends JView
      * @return void
      */
     function display($tpl = null) 
-    {
-//        $doc = JFactory::getDocument();
-//        $doc->addScript('components/com_europeana/views/europeana/submitbutton.js');
-        
+    {   
         // Get data from the model
         $files = $this->get('Items');
         $pagination = $this->get('Pagination');
-
+        $state = $this->get('State');
+        $this->sortDirection = $state->get('list.direction');
+        $this->sortColumn = $state->get('list.ordering');
+        
         // Check for errors.
         if (count($errors = $this->get('Errors'))) 
         {

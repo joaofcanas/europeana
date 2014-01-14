@@ -10,7 +10,8 @@ defined('_JEXEC') or die('Restricted Access');
         <?php echo JText::_('COM_EUROPEANA_EUROPEANA_FILE_ID'); ?>
     </th>                
     <th style="text-align:left;">
-        <?php echo JText::_('COM_EUROPEANA_EUROPEANA_NAME'); ?>
+        <?php //echo JText::_('COM_EUROPEANA_EUROPEANA_NAME'); ?>
+        <?php echo JHTML::_( 'grid.sort', 'COM_EUROPEANA_EUROPEANA_NAME', 'name', $this->sortDirection, $this->sortColumn); ?>
     </th>                
     <th width="20%">
         <?php echo JText::_('COM_EUROPEANA_EUROPEANA_FILENAME'); ?>
@@ -19,7 +20,8 @@ defined('_JEXEC') or die('Restricted Access');
         <?php echo JText::_('COM_EUROPEANA_EUROPEANA_USERNAME'); ?>
     </th>
     <th width="15%">
-        <?php echo JText::_('COM_EUROPEANA_EUROPEANA_DATETIME'); ?>
+        <?php //echo JText::_('COM_EUROPEANA_EUROPEANA_DATETIME'); ?>
+        <?php echo JHTML::_( 'grid.sort', 'COM_EUROPEANA_EUROPEANA_DATETIME', 'datetime', $this->sortDirection, $this->sortColumn); ?>
     </th>
     <th>
         <?php echo JText::_('COM_EUROPEANA_EUROPEANA_LOGS'); ?>
