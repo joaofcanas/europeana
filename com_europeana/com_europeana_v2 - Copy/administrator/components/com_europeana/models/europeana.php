@@ -14,6 +14,7 @@ class EuropeanaModelEuropeana extends JModelList
             'u.name'
             // ...
         );
+        parent::__construct($config);
     }
 
     /**
